@@ -1,0 +1,7 @@
+- hosts: lab-esxi
+  roles:
+  - role: vmware-esxi
+  - role: veos-switches
+  - role: veos-cvx
+  - role: vmware-vcenter
+  - role: veos-cvp

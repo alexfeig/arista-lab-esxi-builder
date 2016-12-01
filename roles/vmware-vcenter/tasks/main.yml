@@ -1,0 +1,43 @@
+---
+# Uses ovftool to deploy VCSA
+
+- name: Deploying the vCenter appliance
+  tags: vcenter_deploy
+  delegate_to: localhost
+  command: >
+    "{{ playbook_dir }}/files/{{ovftool}}"
+    --sourceType=OVA
+    --acceptAllEulas
+    --allowExtraConfig
+    --noSSLVerify
+    --diskMode=thin
+    --skipManifestCheck
+    --powerOn
+    --name="{{vcenter_appliance_name}}"
+    --diskMode=thin
+    --datastore="{{esxi_datastore}}"
+    --network="{{vcenter_portgroup}}"
+    --deploymentOption="{{vcenter_deployment_size}}"
+    --X:injectOvfEnv
+    --X:waitForIp
+    --X:logToConsole
+    --prop:guestinfo.cis.appliance.root.shell=/bin/bash
+    --prop:guestinfo.cis.db.type=embedded
+    --prop:guestinfo.cis.deployment.node.type=embedded
+    --prop:guestinfo.cis.ceip_enabled=false
+    --prop:guestinfo.cis.vmdir.first-instance=true
+    --prop:guestinfo.cis.appliance.ssh.enabled="{{vcenter_ssh_enabled}}"
+    --prop:guestinfo.cis.appliance.net.pnid="{{vcenter_fqdn}}"
+    --prop:guestinfo.cis.appliance.root.passwd="{{vcenter_password}}"
+    --prop:guestinfo.cis.appliance.net.mode=static
+    --prop:guestinfo.cis.appliance.net.addr.family=ipv4
+    --prop:guestinfo.cis.appliance.net.addr="{{vcenter_ip_address}}"
+    --prop:guestinfo.cis.appliance.net.prefix="{{vcenter_ip_netmask}}"
+    --prop:guestinfo.cis.appliance.net.gateway="{{vcenter_ip_gateway}}"
+    --prop:guestinfo.cis.appliance.net.dns.servers="{{dns_1}}"
+    --prop:guestinfo.cis.vmdir.password="{{vcenter_sso_password}}"
+    --prop:guestinfo.cis.vmdir.domain-name="{{vcenter_sso_domain_name}}"
+    --prop:guestinfo.cis.vmdir.site-name="{{vcenter_sso_site_name}}"
+    --prop:guestinfo.cis.appliance.ntp.servers="{{ntp}}"
+    "{{ playbook_dir }}/roles/vmware-vcenter/files/{{vcenter_ova}}"
+    "vi://{{esxi_username}}:{{esxi_password}}@{{esxi_ip}}"

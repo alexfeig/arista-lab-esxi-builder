@@ -1,0 +1,61 @@
+---
+# Uses ovftool to deploy CVP
+
+- name: Deploying the CVP appliance
+  tags: cvp_deploy
+  delegate_to: localhost
+  command: >
+    "{{ playbook_dir }}/files/{{ovftool}}"
+
+    --sourceType=OVA
+    --acceptAllEulas
+    --allowExtraConfig
+    --noSSLVerify
+    --diskMode=thin
+    --skipManifestCheck
+    --name="{{cvp_appliance_name}}"
+    --diskMode=thin
+    --datastore="{{esxi_datastore}}"
+    --network="{{cvp_portgroup}}"
+    --X:injectOvfEnv
+    --X:logToConsole
+    "{{ playbook_dir }}/roles/veos-cvp/files/{{cvp_ova}}"
+    "vi://{{esxi_username}}:{{esxi_password}}@{{esxi_ip}}"
+  ignore_errors: True
+
+- name: Reconfiguring CVP to 8GB RAM
+  delegate_to: localhost
+  tags: cvp_reconfigure
+  vsphere_guest:
+    vcenter_hostname: "{{esxi_ip}}"
+    username: "{{esxi_username}}"
+    password: "{{esxi_password}}"
+    validate_certs: no
+    guest: "{{cvp_appliance_name}}"
+    state: reconfigured
+    vm_disk:
+        disk1:
+            size_gb: '25'
+            type: 'thin'
+            datastore: "{{esxi_datastore}}"
+        disk2:
+            size_gb: '120'
+            type: 'thin'
+            datastore: "{{esxi_datastore}}"
+    vm_nic:
+      nic1:
+        type: "{{esxi_veos_adapter_type}}"
+        network: VM Network
+        network_type: standard
+      nic2:
+        type: "{{esxi_veos_adapter_type}}"
+        network: VM Network
+        network_type: standard
+    vm_hardware:
+      memory_mb: "{{cvp_memory}}"
+      num_cpus: "{{cvp_vcpu}}"
+      osid: centos-64
+      scsi: pvscsi
+    esxi:
+      datacenter: "{{esxi_datacenter}}"
+      hostname: "{{esxi_hostname_01}}.{{domainname}}"

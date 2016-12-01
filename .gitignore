@@ -1,0 +1,8 @@
+*.retry
+.DS_Store
+roles/debops*
+roles/veos-cvp/files/*
+roles/veos-cvx/files/*
+roles/veos-switches/files/*
+roles/vmware-vcenter/files/*
+files/ovftool/*

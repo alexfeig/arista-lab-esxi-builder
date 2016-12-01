@@ -1,0 +1,182 @@
+---
+# This role creates vEOS virtual machines
+
+- name: Creating spines
+  delegate_to: localhost
+  tags: veos_create_spines
+  vsphere_guest:
+    vcenter_hostname: "{{esxi_ip}}"
+    username: "{{esxi_username}}"
+    password: "{{esxi_password}}"
+    validate_certs: no
+    guest: "{{item.key}}"
+    state: powered_off
+    vm_disk:
+        disk1:
+            size_gb: '1'
+            type: 'thin'
+            datastore: "{{esxi_datastore}}"
+    vm_nic:
+      nic1:
+        type: "{{esxi_veos_adapter_type}}"
+        network: VM Network
+        network_type: standard
+      nic2:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic2}}"
+        network_type: standard
+      nic3:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic3}}"
+        network_type: standard
+      nic4:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic4}}"
+        network_type: standard
+      nic5:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic5}}"
+        network_type: standard
+      nic6:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic6}}"
+        network_type: standard
+      nic7:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic7}}"
+        network_type: standard
+    vm_hardware:
+      memory_mb: "{{vm_veos_memory}}"
+      num_cpus: "{{vm_veos_vcpu}}"
+      osid: other26xLinuxGuest
+      scsi: lsi
+    esxi:
+      datacenter: "{{esxi_datacenter}}"
+      hostname: "{{esxi_hostname_01}}.{{domainname}}"
+  with_dict: "{{vm_config_spines}}"
+
+- name: Creating leaf switches
+  delegate_to: localhost
+  tags: veos_create_leafs
+  vsphere_guest:
+    vcenter_hostname: "{{esxi_ip}}"
+    username: "{{esxi_username}}"
+    password: "{{esxi_password}}"
+    validate_certs: no
+    guest: "{{item.key}}"
+    state: powered_off
+    vm_disk:
+        disk1:
+            size_gb: '1'
+            type: 'thin'
+            datastore: "{{esxi_datastore}}"
+    vm_nic:
+      nic1:
+        type: "{{esxi_veos_adapter_type}}"
+        network: VM Network
+        network_type: standard
+      nic2:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic2}}"
+        network_type: standard
+      nic3:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic3}}"
+        network_type: standard
+      nic4:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic4}}"
+        network_type: standard
+      nic5:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic5}}"
+        network_type: standard
+      nic6:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic6}}"
+        network_type: standard
+      nic7:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic7}}"
+        network_type: standard
+      nic8:
+        type: "{{esxi_veos_adapter_type}}"
+        network: "{{item.value.vmnic8}}"
+        network_type: standard    
+    vm_hardware:
+      memory_mb: "{{vm_veos_memory}}"
+      num_cpus: "{{vm_veos_vcpu}}"
+      osid: other26xLinuxGuest
+      scsi: lsi
+    esxi:
+      datacenter: "{{esxi_datacenter}}"
+      hostname: "{{esxi_hostname_01}}.{{domainname}}"
+  with_dict: "{{vm_config_leafs}}"
+
+- name: Removing temporary VMDK files
+  tags: veos_vmdk_remove_1
+  file:
+    path: "/vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}.vmdk"
+    state: absent
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Removing temporary VMDK-flat files
+  tags: veos_vmdk_remove_flat
+  file:
+    path: "/vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}-flat.vmdk"
+    state: absent
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Copying vEOS-lab-combined to all switches
+  delegate_to: localhost
+  tags: veos_copy_switches
+  vsphere_copy:
+    validate_certs: no
+    host: "{{esxi_ip}}"
+    login: "{{esxi_username}}"
+    password: "{{esxi_password}}"
+    datacenter: "{{esxi_datacenter}}"
+    src: "{{ playbook_dir }}/roles/veos-switches/files/vEOS-lab-combined.vmdk"
+    datastore: "{{esxi_datastore}}"
+    path: "{{item.key}}/{{item.key}}.vmdk"
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Converting VMDK files to thick
+  tags: veos_vmdk_repair
+  command: "vmkfstools -i /vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}.vmdk -d eagerzeroedthick /vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}-thick.vmdk"
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Removing original VMDK files
+  tags: veos_vmdk_remove_2
+  file:
+    path: "/vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}.vmdk"
+    state: absent
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Removing SCSI disk from VMX files
+  tags: veos_remove_scsi
+  lineinfile:
+    dest=/vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}.vmx
+    regexp='scsi0'
+    state=absent
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Add IDE Disk to VMX file - 1 of 2
+  tags: veos_ide_disk_1
+  lineinfile: 
+    dest: /vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}.vmx
+    line: "ide0:0.fileName = {{item.key}}-thick.vmdk"
+    insertafter: EOF
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Add IDE Disk to VMX file - 2 of 2
+  tags: veos_ide_disk_2
+  lineinfile: 
+    dest: /vmfs/volumes/{{esxi_datastore}}/{{item.key}}/{{item.key}}.vmx
+    line: "ide0:0.present = \"TRUE\""
+    insertafter: EOF
+  with_dict: "{{vm_config_spines | combine(vm_config_leafs)}}"
+
+- name: Unregistering and Reregistering all VM's
+  tags: veos_reregister
+  shell: "for a in $(vim-cmd vmsvc/getallvms | awk '{print $1}');do vim-cmd vmsvc/reload $a;done"

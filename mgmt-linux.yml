@@ -1,0 +1,3 @@
+- hosts: mgmt-linux-01
+  roles:
+  - role: debops.dnsmasq

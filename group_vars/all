@@ -1,0 +1,123 @@
+---
+
+domainname: 'home.lab'
+dns_1: '172.16.50.1'
+dns_2: '172.16.50.1'
+
+ntp: 'pool.ntp.org'
+
+esxi_hostname_01: 'esxi01'
+esxi_ip: '172.16.50.250'
+esxi_username: 'arista'
+esxi_password: '@ristan3tw0rking'
+esxi_datacenter: 'ha-datacenter'
+esxi_datastore: 'ssd'
+esxi_veos_adapter_type: 'e1000'
+
+vm_veos_memory: '2048'
+vm_veos_vcpu: '1'
+
+ovftool: 'ovftool/ovftool'
+
+vcenter_appliance_name: 'mgmt-vcenter-01'
+vcenter_portgroup: 'VM Network'
+vcenter_deployment_size: 'management-tiny' # Tiny, Small, Medium, Large
+vcenter_ssh_enabled: 'True'
+vcenter_fqdn: 'vcenter.home.lab'
+vcenter_password: 'aristaarista'
+vcenter_ip_address: '172.16.50.130'
+vcenter_ip_netmask: '255.255.255.0'
+vcenter_ip_gateway: '172.16.50.1'
+vcenter_sso_password: 'aristaarista'
+vcenter_sso_domain_name: 'home.lab'
+vcenter_sso_site_name: 'lab'
+vcenter_ova: 'vmware-vcsa'
+
+cvp_appliance_name: 'mgmt-cvp-01'
+cvp_portgroup: 'VM Network'
+cvp_ova: 'cvp-2016.1.2.ova'
+cvp_vcpu: '4'
+cvp_memory: '8192'
+
+vm_config_cvx:
+  mgmt-cvx-01:
+
+vm_config_spines:
+  spine1:
+    vmnic2: 'spine1_rack1-leaf1'
+    vmnic3: 'spine1_rack1-leaf2'
+    vmnic4: 'spine1_rack2-leaf1'
+    vmnic5: 'spine1_rack2-leaf2'
+    vmnic6: 'spine1_rack3-leaf1'
+    vmnic7: 'spine1_rack3-leaf2'
+  spine2:
+    vmnic2: 'spine2_rack1-leaf1'
+    vmnic3: 'spine2_rack1-leaf2'
+    vmnic4: 'spine2_rack2-leaf1'
+    vmnic5: 'spine2_rack2-leaf2'
+    vmnic6: 'spine2_rack3-leaf1'
+    vmnic7: 'spine2_rack3-leaf2'
+  spine3:
+    vmnic2: 'spine3_rack1-leaf1'
+    vmnic3: 'spine3_rack1-leaf2'
+    vmnic4: 'spine3_rack2-leaf1'
+    vmnic5: 'spine3_rack2-leaf2'
+    vmnic6: 'spine3_rack3-leaf1'
+    vmnic7: 'spine3_rack3-leaf2'
+  spine4:
+    vmnic2: 'spine4_rack1-leaf1'
+    vmnic3: 'spine4_rack1-leaf2'
+    vmnic4: 'spine4_rack2-leaf1'
+    vmnic5: 'spine4_rack2-leaf2'
+    vmnic6: 'spine4_rack3-leaf1'
+    vmnic7: 'spine4_rack3-leaf2'
+
+vm_config_leafs:
+  rack1-leaf1:
+    vmnic2: 'spine1_rack1-leaf1'
+    vmnic3: 'spine2_rack1-leaf1'
+    vmnic4: 'spine3_rack1-leaf1'
+    vmnic5: 'spine4_rack1-leaf1'
+    vmnic6: 'rack1-leaf1_rack1-linux-01'
+    vmnic7: 'rack1-leaf1_rack1-esxi-01'
+    vmnic8: 'rack1-leaf1_rack1-leaf2'
+  rack1-leaf2:
+    vmnic2: 'spine1_rack1-leaf2'
+    vmnic3: 'spine2_rack1-leaf2'
+    vmnic4: 'spine3_rack1-leaf2'
+    vmnic5: 'spine4_rack1-leaf2'
+    vmnic6: 'rack1-leaf2_rack1-linux-01'
+    vmnic7: 'rack1-leaf2_rack1-esxi-01'
+    vmnic8: 'rack1-leaf1_rack1-leaf2'
+  rack2-leaf1:
+    vmnic2: 'spine1_rack2-leaf1'
+    vmnic3: 'spine2_rack2-leaf1'
+    vmnic4: 'spine3_rack2-leaf1'
+    vmnic5: 'spine4_rack2-leaf1'
+    vmnic6: 'rack2-leaf1_rack2-linux-01'
+    vmnic7: 'rack2-leaf1_rack2-esxi-01'
+    vmnic8: 'rack2-leaf1_rack2-leaf2'
+  rack2-leaf2:
+    vmnic2: 'spine1_rack2-leaf2'
+    vmnic3: 'spine2_rack2-leaf2'
+    vmnic4: 'spine3_rack2-leaf2'
+    vmnic5: 'spine4_rack2-leaf2'
+    vmnic6: 'rack2-leaf2_rack2-linux-01'
+    vmnic7: 'rack2-leaf2_rack2-esxi-01'
+    vmnic8: 'rack2-leaf1_rack2-leaf2'
+  rack3-leaf1:
+    vmnic2: 'spine1_rack3-leaf1'
+    vmnic3: 'spine2_rack3-leaf1'
+    vmnic4: 'spine3_rack3-leaf1'
+    vmnic5: 'spine4_rack3-leaf1'
+    vmnic6: 'rack3-leaf1_rack3-linux-01'
+    vmnic7: 'rack3-leaf1_rack3-esxi-01'
+    vmnic8: 'rack3-leaf1_rack3-leaf2'
+  rack3-leaf2:
+    vmnic2: 'spine1_rack3-leaf2'
+    vmnic3: 'spine2_rack3-leaf2'
+    vmnic4: 'spine3_rack3-leaf2'
+    vmnic5: 'spine4_rack3-leaf2'
+    vmnic6: 'rack3-leaf2_rack3-linux-01'
+    vmnic7: 'rack3-leaf2_rack3-esxi-01'
+    vmnic8: 'rack3-leaf1_rack3-leaf2'

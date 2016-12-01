@@ -1,0 +1,9 @@
+[all:vars]
+ansible_user=arista
+ansible_ssh_pass=@ristan3tw0rking
+
+[lab-esxi]
+172.16.50.250
+
+[mgmt-linux-01]
+172.16.30.31 ansible_user=arista ansible_ssh_pass=arista ansible_become=true

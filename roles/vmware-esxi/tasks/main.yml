@@ -1,0 +1,60 @@
+---
+# This role configures ESXi
+
+- name: Create vSwitches from file esxi_vswitch_list.txt
+  tags: esxi_vswitch
+  command: "{{ item }}"
+  with_items: "{{ lookup('file','esxi_vswitch_list.txt').splitlines() }}"
+  ignore_errors: yes
+
+- name: Removing existing DNS servers
+  tags: esxi_dns_remove
+  shell: "for a in $(esxcli network ip dns server list | awk '{$1=\"\"; print $0}' | sed 's/,//' );do esxcli network ip dns server remove -s $a;done"
+
+- name: Configuring ESXi hostname and DNS servers
+  tags: esxi_dns
+  command: "{{ item }}"
+  with_items: 
+    - "esxcli system hostname set --host {{esxi_hostname_01}}"
+    - "esxcli system hostname set --domain {{domainname}}"
+    - "esxcli network ip dns server add --server {{dns_1}}"
+    - "esxcli network ip dns server add --server {{dns_2}}"
+    - "esxcli network ip dns search add --domain={{domainname}}"
+
+- name: Configuring ESXi firewall
+  tags: esxi_firewall
+  command: "{{ item }}"
+  with_items: 
+    - "esxcli network firewall ruleset set --ruleset-id=\"ntpClient\" --enabled True"
+
+- name: Configuring SSH to start with the host
+  tags: esxi_ssh_enable
+  command: "{{ item }}"
+  with_items: 
+    - "vim-cmd hostsvc/enable_ssh"
+
+- name: Add pool.ntp.org to NTP server list
+  tags: esxi_ntp_servers
+  lineinfile: 
+    dest: /etc/ntp.conf
+    line: "{{item}}"
+    insertafter: EOF
+  with_items:
+    - "server {{ntp}}"
+
+- name: Enabling NTP - NOTE - You will not see it enabled through the thick client. This is a known bug.
+  tags: esxi_ntp_enable
+  command: "{{ item }}"
+  with_items: 
+    - "/sbin/chkconfig ntpd on"
+
+- name: Restarting hostd
+  tags: esxi_restart_hostd
+  command: "{{ item }}"
+  with_items: 
+    - "/etc/init.d/hostd restart"
+
+- name: Sleeping for 30 seconds
+  tags: pause_30s
+  pause: seconds=30 
+  delegate_to: localhost

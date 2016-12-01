@@ -1,0 +1,117 @@
+esxcli network vswitch standard add -v spine1_rack1-leaf1
+esxcli network vswitch standard add -v spine2_rack1-leaf1
+esxcli network vswitch standard add -v spine3_rack1-leaf1
+esxcli network vswitch standard add -v spine4_rack1-leaf1
+esxcli network vswitch standard add -v spine1_rack1-leaf2
+esxcli network vswitch standard add -v spine2_rack1-leaf2
+esxcli network vswitch standard add -v spine3_rack1-leaf2
+esxcli network vswitch standard add -v spine4_rack1-leaf2
+esxcli network vswitch standard add -v spine1_rack2-leaf1
+esxcli network vswitch standard add -v spine2_rack2-leaf1
+esxcli network vswitch standard add -v spine3_rack2-leaf1
+esxcli network vswitch standard add -v spine4_rack2-leaf1
+esxcli network vswitch standard add -v spine1_rack2-leaf2
+esxcli network vswitch standard add -v spine2_rack2-leaf2
+esxcli network vswitch standard add -v spine3_rack2-leaf2
+esxcli network vswitch standard add -v spine4_rack2-leaf2
+esxcli network vswitch standard add -v spine1_rack3-leaf1
+esxcli network vswitch standard add -v spine2_rack3-leaf1
+esxcli network vswitch standard add -v spine3_rack3-leaf1
+esxcli network vswitch standard add -v spine4_rack3-leaf1
+esxcli network vswitch standard add -v spine1_rack3-leaf2
+esxcli network vswitch standard add -v spine2_rack3-leaf2
+esxcli network vswitch standard add -v spine3_rack3-leaf2
+esxcli network vswitch standard add -v spine4_rack3-leaf2
+esxcli network vswitch standard add -v rack1-leaf1_rack1-linux-01
+esxcli network vswitch standard add -v rack1-leaf2_rack1-linux-01
+esxcli network vswitch standard add -v rack1-leaf1_rack1-esxi-01
+esxcli network vswitch standard add -v rack1-leaf2_rack1-esxi-01
+esxcli network vswitch standard add -v rack2-leaf1_rack2-linux-01
+esxcli network vswitch standard add -v rack2-leaf2_rack2-linux-01
+esxcli network vswitch standard add -v rack2-leaf1_rack2-esxi-01
+esxcli network vswitch standard add -v rack2-leaf2_rack2-esxi-01
+esxcli network vswitch standard add -v rack3-leaf1_rack3-linux-01
+esxcli network vswitch standard add -v rack3-leaf2_rack3-linux-01
+esxcli network vswitch standard add -v rack3-leaf1_rack3-esxi-01
+esxcli network vswitch standard add -v rack3-leaf2_rack3-esxi-01
+esxcli network vswitch standard add -v rack1-leaf1_rack1-leaf2
+esxcli network vswitch standard add -v rack2-leaf1_rack2-leaf2
+esxcli network vswitch standard add -v rack3-leaf1_rack3-leaf2
+esxcli network vswitch standard policy security set -v spine1_rack1-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine2_rack1-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine3_rack1-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine4_rack1-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine1_rack1-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine2_rack1-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine3_rack1-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine4_rack1-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine1_rack2-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine2_rack2-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine3_rack2-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine4_rack2-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine1_rack2-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine2_rack2-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine3_rack2-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine4_rack2-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine1_rack3-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine2_rack3-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine3_rack3-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine4_rack3-leaf1 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine1_rack3-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine2_rack3-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine3_rack3-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v spine4_rack3-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack1-leaf1_rack1-linux-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack1-leaf2_rack1-linux-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack1-leaf1_rack1-esxi-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack1-leaf2_rack1-esxi-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack2-leaf1_rack2-linux-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack2-leaf2_rack2-linux-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack2-leaf1_rack2-esxi-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack2-leaf2_rack2-esxi-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack3-leaf1_rack3-linux-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack3-leaf2_rack3-linux-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack3-leaf1_rack3-esxi-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack3-leaf2_rack3-esxi-01 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack1-leaf1_rack1-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack2-leaf1_rack2-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard policy security set -v rack3-leaf1_rack3-leaf2 -f  yes -m yes -p yes
+esxcli network vswitch standard portgroup add -v spine1_rack1-leaf1 -p spine1_rack1-leaf1
+esxcli network vswitch standard portgroup add -v spine2_rack1-leaf1 -p spine2_rack1-leaf1
+esxcli network vswitch standard portgroup add -v spine3_rack1-leaf1 -p spine3_rack1-leaf1
+esxcli network vswitch standard portgroup add -v spine4_rack1-leaf1 -p spine4_rack1-leaf1
+esxcli network vswitch standard portgroup add -v spine1_rack1-leaf2 -p spine1_rack1-leaf2
+esxcli network vswitch standard portgroup add -v spine2_rack1-leaf2 -p spine2_rack1-leaf2
+esxcli network vswitch standard portgroup add -v spine3_rack1-leaf2 -p spine3_rack1-leaf2
+esxcli network vswitch standard portgroup add -v spine4_rack1-leaf2 -p spine4_rack1-leaf2
+esxcli network vswitch standard portgroup add -v spine1_rack2-leaf1 -p spine1_rack2-leaf1
+esxcli network vswitch standard portgroup add -v spine2_rack2-leaf1 -p spine2_rack2-leaf1
+esxcli network vswitch standard portgroup add -v spine3_rack2-leaf1 -p spine3_rack2-leaf1
+esxcli network vswitch standard portgroup add -v spine4_rack2-leaf1 -p spine4_rack2-leaf1
+esxcli network vswitch standard portgroup add -v spine1_rack2-leaf2 -p spine1_rack2-leaf2
+esxcli network vswitch standard portgroup add -v spine2_rack2-leaf2 -p spine2_rack2-leaf2
+esxcli network vswitch standard portgroup add -v spine3_rack2-leaf2 -p spine3_rack2-leaf2
+esxcli network vswitch standard portgroup add -v spine4_rack2-leaf2 -p spine4_rack2-leaf2
+esxcli network vswitch standard portgroup add -v spine1_rack3-leaf1 -p spine1_rack3-leaf1
+esxcli network vswitch standard portgroup add -v spine2_rack3-leaf1 -p spine2_rack3-leaf1
+esxcli network vswitch standard portgroup add -v spine3_rack3-leaf1 -p spine3_rack3-leaf1
+esxcli network vswitch standard portgroup add -v spine4_rack3-leaf1 -p spine4_rack3-leaf1
+esxcli network vswitch standard portgroup add -v spine1_rack3-leaf2 -p spine1_rack3-leaf2
+esxcli network vswitch standard portgroup add -v spine2_rack3-leaf2 -p spine2_rack3-leaf2
+esxcli network vswitch standard portgroup add -v spine3_rack3-leaf2 -p spine3_rack3-leaf2
+esxcli network vswitch standard portgroup add -v spine4_rack3-leaf2 -p spine4_rack3-leaf2
+esxcli network vswitch standard portgroup add -v rack1-leaf1_rack1-linux-01 -p rack1-leaf1_rack1-linux-01
+esxcli network vswitch standard portgroup add -v rack1-leaf2_rack1-linux-01 -p rack1-leaf2_rack1-linux-01
+esxcli network vswitch standard portgroup add -v rack1-leaf1_rack1-esxi-01 -p rack1-leaf1_rack1-esxi-01
+esxcli network vswitch standard portgroup add -v rack1-leaf2_rack1-esxi-01 -p rack1-leaf2_rack1-esxi-01
+esxcli network vswitch standard portgroup add -v rack2-leaf1_rack2-linux-01 -p rack2-leaf1_rack2-linux-01
+esxcli network vswitch standard portgroup add -v rack2-leaf2_rack2-linux-01 -p rack2-leaf2_rack2-linux-01
+esxcli network vswitch standard portgroup add -v rack2-leaf1_rack2-esxi-01 -p rack2-leaf1_rack2-esxi-01
+esxcli network vswitch standard portgroup add -v rack2-leaf2_rack2-esxi-01 -p rack2-leaf2_rack2-esxi-01
+esxcli network vswitch standard portgroup add -v rack3-leaf1_rack3-linux-01 -p rack3-leaf1_rack3-linux-01
+esxcli network vswitch standard portgroup add -v rack3-leaf2_rack3-linux-01 -p rack3-leaf2_rack3-linux-01
+esxcli network vswitch standard portgroup add -v rack3-leaf1_rack3-esxi-01 -p rack3-leaf1_rack3-esxi-01
+esxcli network vswitch standard portgroup add -v rack3-leaf2_rack3-esxi-01 -p rack3-leaf2_rack3-esxi-01
+esxcli network vswitch standard portgroup add -v rack1-leaf1_rack1-leaf2 -p rack1-leaf1_rack1-leaf2
+esxcli network vswitch standard portgroup add -v rack2-leaf1_rack2-leaf2 -p rack2-leaf1_rack2-leaf2
+esxcli network vswitch standard portgroup add -v rack3-leaf1_rack3-leaf2 -p rack3-leaf1_rack3-leaf2
