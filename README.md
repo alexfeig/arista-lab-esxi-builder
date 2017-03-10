@@ -6,6 +6,7 @@ Please bear in mind that I built this to create my environment and it's highly o
 ## Requirements
 You will need the following to make this project work:
 * This project uses Ansible to build. Anything version 2.1 or above will work.
+* You will need SSH enabled in ESXi/
 * You will need a copy of VMware's `ovftool` in `/files`
 * A working ESXi host. All you really need for this is a management IP address and a single datastore.
 * If you wish to install CVP, you will need the Arista CVP OVA in `files/`
