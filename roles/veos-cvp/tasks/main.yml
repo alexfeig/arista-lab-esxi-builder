@@ -19,7 +19,7 @@
     --network="{{cvp_portgroup}}"
     --X:injectOvfEnv
     --X:logToConsole
-    "{{ playbook_dir }}/roles/veos-cvp/files/{{cvp_ova}}"
+    "{{ playbook_dir }}/files/{{cvp_ova}}"
     "vi://{{esxi_username}}:{{esxi_password}}@{{esxi_ip}}"
   ignore_errors: True
 

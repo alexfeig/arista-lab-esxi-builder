@@ -54,7 +54,7 @@
     login: "{{esxi_username}}"
     password: "{{esxi_password}}"
     datacenter: "{{esxi_datacenter}}"
-    src: "{{ playbook_dir }}/roles/veos-cvx/files/vEOS-lab-combined.vmdk"
+    src: "{{ playbook_dir }}/files/vEOS-lab-combined.vmdk"
     datastore: "{{esxi_datastore}}"
     path: "{{item.key}}/{{item.key}}.vmdk"
   with_dict: "{{vm_config_cvx}}"
